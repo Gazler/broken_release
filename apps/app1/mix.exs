@@ -1,0 +1,44 @@
+defmodule App1.Mixfile do
+  use Mix.Project
+
+  def project do
+    [app: :app1,
+     version: "0.1.0",
+     build_path: "../../_build",
+     config_path: "../../config/config.exs",
+     deps_path: "../../deps",
+     lockfile: "../../mix.lock",
+     elixir: "~> 1.3",
+     build_embedded: Mix.env == :prod,
+     start_permanent: Mix.env == :prod,
+     deps: deps]
+  end
+
+  # Configuration for the OTP application
+  #
+  # Type "mix help compile.app" for more information
+  def application do
+    [applications: [:dep1, :phoenix, :phoenix_pubsub, :rollbax]] #works
+    [applications: [:phoenix, :phoenix_pubsub, :rollbax, :dep1]] #broken
+  end
+
+  # Dependencies can be Hex packages:
+  #
+  #   {:mydep, "~> 0.3.0"}
+  #
+  # Or git/path repositories:
+  #
+  #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
+  #
+  # To depend on another app inside the umbrella:
+  #
+  #   {:myapp, in_umbrella: true}
+  #
+  # Type "mix help deps" for more examples and options
+  defp deps do
+    [{:dep1, in_umbrella: true},
+     {:phoenix, "~> 1.2.0"},
+     {:phoenix_pubsub, "~> 1.0"},
+     {:rollbax, "~> 0.6"}]
+  end
+end
